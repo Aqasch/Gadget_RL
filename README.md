@@ -1,5 +1,5 @@
 # Gadget Reinforcement Learning
- ## [*] RL to solve easy problems -> extract useful gadgets -> leverage gadgetized RL to tackle hard problems
+ ## [x] RL to solve easy problems -> extract useful gadgets -> leverage gadgetized RL to tackle hard problems
 
 <div style="font-size: 20px;">
 
