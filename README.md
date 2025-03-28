@@ -1,5 +1,5 @@
 # Gadget Reinforcement Learning
- ## [RL to solve easy problems -> extract useful gadgets -> leverage gadgetized RL to tackle hard problems]
+ ## RL to solve easy problems -> extract useful gadgets -> leverage gadgetized RL to tackle hard problems
 
 <div style="font-size: 20px;">
 
@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 # Running CRL and GRL
 
-In the `gadget_RL` we already have the codes prepared for `CRLQAS` [ICLR 2024] on tranverse field Ising model and `GRL` with 1 and 2 extracted gates.
+In the `gadget_RL` we already have the codes prepared for `CRLQAS` [ICLR 2024](https://openreview.net/forum?id=rINBD8jPoP&noteId=CrB0JrEQJY) on tranverse field Ising model and `GRL` with 1 and 2 extracted gates.
 
 ## Configurations
 
