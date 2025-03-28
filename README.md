@@ -15,11 +15,11 @@ pip install -r requirements.txt
 
 # Running CRL and GRL
 
-In the `gadget_RL` we already have the codes prepared for `CRLQAS` [ICLR 2024](https://openreview.net/forum?id=rINBD8jPoP&noteId=CrB0JrEQJY) on tranverse field Ising model and `GRL` with 1 and 2 extracted gates.
+In the `gadget_RL`, we already have the codes prepared for `CRLQAS` [ICLR 2024](https://openreview.net/forum?id=rINBD8jPoP&noteId=CrB0JrEQJY) on the transverse field Ising model and `GRL` with 1 and 2 extracted gates.
 
 ## Configurations
 
-Inside `gadget_RL` in the `configuration_file` folder we have many possible configurations of the agent-environment parameters such as 
+Inside `gadget_RL` in the `configuration_file` folder, we have many possible configurations of the agent-environment parameters such as 
 
 - Number of qubits
 - Number of layers: defines the number of steps per episode
@@ -27,10 +27,10 @@ Inside `gadget_RL` in the `configuration_file` folder we have many possible conf
     - **if 0:** we get to train the CRL under RX, RY, RZ and CX action space.
     - **if 1:** we get to train the CRL under the action space of IBM Torino hardware.
 
-In the name of the configurations if it contains `synthesized` it should be used for `GRL` runs. Where `...synthesize_1` means GRL with one gadget and `...synthesize_2` corresponds GRL with two gadgets.
+In the name of the configurations, if it contains `synthesized`, it should be used for `GRL` runs. Where `...synthesize_1` means GRL with one gadget and `...synthesize_2` corresponds to GRL with two gadgets.
 
 ## To run CRL without extracted gates
-In order to run CRL without any gadgets: In the environment folder the gadgetless environment is provided with `environment.py` to train in this folder you need to run `main.py` with the valid configuration.
+In order to run CRL without any gadgets: In the environment folder, the gadgetless environment is provided with `environment.py` to train in this folder you need to run `main.py` with the valid configuration.
 
 For an example (for **RX, RY, RZ, CX** actions space):
 
@@ -50,7 +50,7 @@ runs `CRLQAS` on 2-qubit TFIM with **(RZ, SX, X, CZ)** gateset of `IBM Torino`.
 
 ## Analysing saved circuits:
 
-After training the `results/` folder contains all the results corresponding folders starts with the same name as the name in `configuration_files/`. The results are in the `summary_{experiment_seed}.pickle` which is a dictionary containing folloing variables:
+After training, the `results/` folder contains all the results. The corresponding folders start with the same name as the name in `configuration_files/`. The results are in the `summary_{experiment_seed}.pickle` which is a dictionary containing folloing variables:
 
 - *loss:* The loss function of the agent
 - *actions:* The action taken at each step
@@ -63,9 +63,9 @@ After training the `results/` folder contains all the results corresponding fold
 - *save_circ:* Circuit saved each step 
 - *rewards:* reward received each step
 
-## Finding gadgets
+## Finding Gadgets
 
-Here we discuss how to discover gadgets automatically from the top $k$-circuits. In our case top circuits are the ones which provides the best approximation to the ground energy of the TFIM. Plese follow the steps mentioned below:
+Here, we discuss how to discover gadgets automatically from the top $k$-circuits. In our case, top circuits are the ones which provide the best approximation to the ground energy of the TFIM. Please follow the steps mentioned below:
 
 - Go to folder `discover_gadgets`.
 - Run:
@@ -95,16 +95,16 @@ To train GRL with just 1 gadget on 2-qubit TFIM:
 main_synthesized_1.py --seed {experiment_seed} --config tfim_2q_j1_h1_synthesized_1 --experiment_name "TFIM/"
 ```
 
-the gadget under consideration is:
+The gadget under consideration is:
 ```
 ──X──SX──
 ```
 
-To train GRL with 2 extracted gadget on 2-qubit TFIM:
+To train GRL with 2 extracted gadgets on 2-qubit TFIM:
 ```
 main_synthesized_2.py --seed {experiment_seed} --config tfim_2q_j1_h1_synthesized_2 --experiment_name "TFIM/"
 ```
-here the additional gadget is:
+here, the additional gadget is:
 ```
 ──RZ(θ)───■──
           │
