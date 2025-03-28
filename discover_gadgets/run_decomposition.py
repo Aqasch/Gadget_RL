@@ -60,8 +60,49 @@ def trimmed_circuit(qc, max_depth):
     
     return trimmed_circuit
 
+# Prompt user for input
+print("Do you want to:")
+print("1. Load circuits RL cirtuits from library?")
+print("2. Test the program synthesis with already saved circuits?")
+choice = input("Enter 1 or 2: ")
+
+# Initialize variables based on user choice
+if choice == "1":
+    # Load circuits from saved library
+    print()
+    print('-x-x-x-x-x-x-x-x-x-x-x-')
+    n_qubits = input("Enter the number of qubits: ")
+    J_value = 1
+    print()
+    print('-x-x-x-x-x-x-x-x-x-x-x-')
+    print("Did you already extracted best circuits using GRL?")
+    print("1. Yes.")
+    print("2. No.")
+    choice = input("Enter 1 or 2: ")
+
+    if choice == "1":
+        path = f"example_circuits_to_synthesize/best_circuits/circ_list_TFIM_qubit{n_qubits}.pickle"
+        name = f"ground_{n_qubits}_J{J_value}"
+    elif choice == "2":
+        print()
+        print('-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?')
+        print('=>> Please go back to the previous folder and check README.')
+        print('=>> There you can find instructions to run the GRL and save the best circuits')
+        print('-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?')
+        exit()
+    else:
+        print("Invalid choice. Please restart the program and enter either 1 or 2.")
+        exit()
+elif choice == "2":
+    # Test program synthesis
+    path = "example_circuits_to_synthesize/best_circuits/circ_list_for_testing_synthesis.pickle"
+    name = "the_test_of_program_synthesis"
+else:
+    print("Invalid choice. Please restart the program and enter either 1 or 2.")
+    exit()
+
 class args:
-    n_qubits = 2
+    n_qubits = n_qubits
     J = 1
     hh = 0.001
     decomposed = 1
@@ -106,58 +147,31 @@ try:
 except SystemExit as e:
     eprint("Running from interactive session. Loading default parameters")
 
-# Prompt user for input
-print("Do you want to:")
-print("1. Load circuits RL cirtuits from library?")
-print("2. Test the program synthesis with already saved circuits?")
-choice = input("Enter 1 or 2: ")
-
-# Initialize variables based on user choice
-if choice == "1":
-    # Load circuits from saved library
-    print()
-    print('-x-x-x-x-x-x-x-x-x-x-x-')
-    n_qubits = input("Enter the number of qubits: ")
-    J_value = 1
-    print()
-    print('-x-x-x-x-x-x-x-x-x-x-x-')
-    print("Did you already extracted best circuits using GRL?")
-    print("1. Yes.")
-    print("2. No.")
-    choice = input("Enter 1 or 2: ")
-
-    if choice == "1":
-        print('Here we start the program synthesis!')
-        path = f"example_circuits_to_synthesize/best_circuits/circ_list_TFIM_qubit{n_qubits}.pickle"
-        name = f"ground_{n_qubits}_J{J_value}"
-    elif choice == "2":
-        print()
-        print('-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?')
-        print('=>> Please go back to the previous folder and check README.')
-        print('=>> There you can find instructions to run the GRL and save the best circuits')
-        print('-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?-?')
-        exit()
-    else:
-        print("Invalid choice. Please restart the program and enter either 1 or 2.")
-        exit()
-elif choice == "2":
-    # Test program synthesis
-    path = "example_circuits_to_synthesize/best_circuits/circ_list_for_testing_synthesis.pickle"
-    name = "the_test_of_program_synthesis"
-else:
-    print("Invalid choice. Please restart the program and enter either 1 or 2.")
-    exit()
 
 
 
-1
+
 # Output the selected path and name
 print(f"Selected path: {path}")
 print(f"Selected name: {name}")
+
+
+"""
+Making large depth circuit smaller.
+"""
+def calculate_cut_depth(cut_depth):
+    # Your function logic here
+    print(f"The cut depth is: {cut_depth}")
+
+# Get user input for cut depth
+cut_depth = int(input("(THE FINAL QUESTION) Please enter the cut depth (+ve integer only please): "))
+
+# Call the function with user input
+calculate_cut_depth(cut_depth)
+
 # print(path)
 with open(path, "rb") as handle:
     b = dill.load(handle)
-
 
 
 eprint(f"Loading solutions from {path}")
@@ -173,14 +187,10 @@ library_settings = {
     "pseudoCounts": args.pseudoCounts,  # increase to 100, test a few values
 }
 
-primitives = [pr.p_rx, pr.p_ry, pr.p_rz, pr.p_cnot]
+primitives = [pr.p_x, pr.p_rz, pr.p_sx, pr.p_hadamard, pr.p_cz]
 grammar = Grammar.uniform(primitives)
 eprint(f"Library building settings: {library_settings}")
 
-"""
-Making large depth circuit smaller.
-"""
-cut_depth = 12
 
 
 # Generate a few example tasks
@@ -250,5 +260,5 @@ with open(f"experimentOutputs/{name}_grammar.pickle", "wb") as f:
     pickle.dump(new_grammar, f)
 with open(f"experimentOutputs/{name}_frontiers.pickle", "wb") as f:
     pickle.dump(new_frontiers, f)
-print('FINISH TIME:', time.time()-time_init)
+print('FINISH TIME (seconds):', time.time()-time_init)
 eprint(f"Results saved in experimentOutputs/{timestamp}_{name}_...")
